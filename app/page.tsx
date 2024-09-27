@@ -6,7 +6,7 @@ const MyApp = () => {
   return (
     <>
       <Navbar />
-
+ 
     </>
   );
 }
