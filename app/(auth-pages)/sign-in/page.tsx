@@ -1,8 +1,7 @@
 import { signInAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { input } from "@/components/ui/input";
 import Link from "next/link";
 
 export default function Login({ searchParams }: { searchParams: Message }) {
@@ -16,18 +15,28 @@ export default function Login({ searchParams }: { searchParams: Message }) {
         </Link>
       </p>
       <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-        <Label htmlFor="email">Email</Label>
-        <Input name="email" placeholder="you@example.com" required />
+        <label className="label" htmlFor="email">
+          Email
+        </label>
+        <input
+          className="input input-bordered"
+          name="email"
+          placeholder="you@example.com"
+          required
+        />
         <div className="flex justify-between items-center">
-          <Label htmlFor="password">Password</Label>
+          <label className="label" htmlFor="password">
+            Password
+          </label>
           <Link
-            className="text-xs text-foreground underline"
+            className="text-s text-foreground underline"
             href="/forgot-password"
           >
             Forgot Password?
           </Link>
         </div>
-        <Input
+        <input
+          className="input input-bordered"
           type="password"
           name="password"
           placeholder="Your password"
