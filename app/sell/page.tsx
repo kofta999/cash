@@ -1,6 +1,8 @@
 'use client';
 import { title } from 'process';
 import React, {useState} from 'react'
+
+
 interface Choice {
   label: string;
   value: string;
@@ -22,11 +24,11 @@ const Sell = () => {
     'Men\'s Accessories',
   ];
 
-  return (
-    
-    <div className="choice-box">
+  return ( 
+  
+    <div className="choice-box flex flex-col mt-8 mx-auto ml-4 h-screen ">  
       <h2>post your Ad</h2>
-
+     <div className='choice-container mb-4 border border-gray-300 rounded-md px-4 py-2' >
       {choices.map((choice, index) => (
         <div key={index} className="choice-item">
           <input
@@ -40,10 +42,11 @@ const Sell = () => {
           <label htmlFor={choice}>{choice}</label>
         </div>
       ))}
+     </div>
 
 
-      <div>
-        <label htmlFor="title"> title:</label>
+      <div className='title-container mb-4 border border-gray-300 rounded-md px-4 py-2 '>
+        <label htmlFor="title">Ad title:</label>
         <input 
           type="text"
           id="input"
@@ -53,6 +56,7 @@ const Sell = () => {
         />
       </div>
     </div>
+
   );
 };
 
