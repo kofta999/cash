@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { FormEventHandler, useState } from "react";
 
 const Searchbar = () => {
   const [searchTerm, setsearchTerm] = useState("");
 
-  const handleSearch = (e) => {
+  const handleSearch: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     //searchlogic
     console.log("searchterm:", searchTerm);
