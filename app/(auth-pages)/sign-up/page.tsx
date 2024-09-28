@@ -1,8 +1,7 @@
 import { signUpAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
+import GoogleSignIn from "@/components/google-button";
 import { SubmitButton } from "@/components/submit-button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
 export default function Signup({ searchParams }: { searchParams: Message }) {
@@ -15,7 +14,11 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
   }
 
   return (
-    <>
+    <div>
+      <div>
+        <GoogleSignIn />
+      </div>
+      <div className="divider">Or with</div>
       <form className="flex flex-col min-w-64 max-w-64 mx-auto">
         <h1 className="text-2xl font-medium">Sign up</h1>
         <p className="text-sm text text-foreground">
@@ -25,10 +28,20 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
           </Link>
         </p>
         <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-          <Label htmlFor="email">Email</Label>
-          <Input name="email" placeholder="you@example.com" required />
-          <Label htmlFor="password">Password</Label>
-          <Input
+          <label className="label" htmlFor="email">
+            Email
+          </label>
+          <input
+            className="input input-bordered"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
+          <label className="label" htmlFor="password">
+            Password
+          </label>
+          <input
+            className="input input-bordered"
             type="password"
             name="password"
             placeholder="Your password"
@@ -41,6 +54,6 @@ export default function Signup({ searchParams }: { searchParams: Message }) {
           <FormMessage message={searchParams} />
         </div>
       </form>
-    </>
+    </div>
   );
 }
