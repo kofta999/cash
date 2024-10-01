@@ -1,6 +1,5 @@
-'use client';
-import { title } from 'process';
-import React, {useState} from 'react'
+"use client";
+import React, { ChangeEventHandler, useState } from "react";
 interface Choice {
   label: string;
   value: string;
@@ -23,37 +22,35 @@ const Sell = () => {
   ];
 
   return (
-    
     <div className="choice-box">
       <h2>post your Ad</h2>
-     <div className='choice-container mb-4 border border-gray-300 rounded-md px-4 py-2' >
-      {choices.map((choice, index) => (
-        <div key={index} className="choice-item">
+      <div className="choice-container mb-4 border border-gray-300 rounded-md px-4 py-2">
+        {choices.map((choice, index) => (
+          <div key={index} className="choice-item">
+            <input
+              type="radio"
+              id={choice}
+              name="choice"
+              value={choice}
+              checked={selectedChoice === choice}
+              onChange={handleChoiceChange}
+            />
+            <label htmlFor={choice}>{choice}</label>
+          </div>
+        ))}
+
+        <div>
+          <label htmlFor="title"> title:</label>
           <input
-            type="radio"
-            id={choice}
-            name="choice"
-            value={choice}
-            checked={selectedChoice === choice}
-            onChange={handleChoiceChange}
+            type="text"
+            id="input"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter a descriptive title for your ad"
           />
-          <label htmlFor={choice}>{choice}</label>
         </div>
-      ))}
-
-
-      <div>
-        <label htmlFor="title"> title:</label>
-        <input 
-          type="text"
-          id="input"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Enter a descriptive title for your ad"
-        />
       </div>
     </div>
-
   );
 };
 
