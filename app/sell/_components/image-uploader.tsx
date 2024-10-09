@@ -1,13 +1,18 @@
-import { useState, useRef } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import { PlusIcon, XIcon } from "lucide-react";
 
-export default function ImageUploader() {
-  const [images, setImages] = useState<string[]>([]);
+interface ImageUploaderProps {
+  setImages: React.Dispatch<React.SetStateAction<File[]>>;
+}
+
+export default function ImageUploader({ setImages }: ImageUploaderProps) {
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const removeImage = (index: number) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setImageUrls((prevImages) => prevImages.filter((_, i) => i !== index));
 
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -15,18 +20,22 @@ export default function ImageUploader() {
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      const newImages = Array.from(files).map((file) =>
+    const newFiles = e.target.files;
+    if (newFiles) {
+      const newFilesArray = Array.from(newFiles);
+      const newObjectURLs = newFilesArray.map((file) =>
         URL.createObjectURL(file),
       );
-      setImages((prevImages) => [...prevImages, ...newImages]);
+
+      setImages((prevFiles) => [...prevFiles, ...newFilesArray]);
+      setImageUrls((prevURLs) => [...prevURLs, ...newObjectURLs]);
 
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
     }
   };
+
   return (
     <div className="flex justify-center gap-4 flex-wrap items-center mb-4 border border-gray-300 rounded-md px-4 py-2">
       <input
@@ -38,13 +47,13 @@ export default function ImageUploader() {
         accept="image/*"
       />
 
-      {images.length == 0 ? (
+      {imageUrls.length == 0 ? (
         <button className="btn" onClick={() => fileInputRef.current?.click()}>
           <PlusIcon /> Upload Images
         </button>
       ) : (
         <>
-          {images.map((image, index) => (
+          {imageUrls.map((image, index) => (
             <div key={index} className="relative group">
               <Image
                 src={image}

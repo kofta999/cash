@@ -24,4 +24,32 @@ export async function getUserProducts() {
 
 export async function createProduct(formData: FormData) {
   console.log("Received user data", formData);
+
+  const files = formData.getAll("images");
+
+  console.log(files);
+
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error) {
+    // TODO: handle
+    return;
+  }
+
+  const user = data.user!;
+
+  const file = files[0] as File;
+  console.log(file);
+
+  try {
+    const res = await supabase.storage
+      .from("product-images")
+      .upload(`${user.id}/test.png`, file);
+
+    console.log("uploaded", res);
+  } catch (e) {
+    console.log(e);
+  }
 }

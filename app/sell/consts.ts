@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 interface Choice {
   label: string;
   value: string;
@@ -40,3 +42,13 @@ export const governorates: Choice[] = [
   { label: "Suez", value: "Suez" },
   { label: "Luxor", value: "Luxor" },
 ];
+
+export const sellFormSchema = z.object({
+  type: z.string(),
+  title: z.string().min(3),
+  description: z.string(),
+  images: z.array(z.instanceof(File)),
+  governorate: z.string().min(1),
+});
+
+export type SellFormSchema = z.infer<typeof sellFormSchema>;
