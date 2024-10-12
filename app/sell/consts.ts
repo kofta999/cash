@@ -47,7 +47,7 @@ export const sellFormSchema = z.object({
   type: z.string(),
   title: z.string().min(3),
   description: z.string(),
-  images: z.array(z.instanceof(File)),
+  imageUrls: z.array(z.string()),
   governorate: z.string().min(1),
 });
 
