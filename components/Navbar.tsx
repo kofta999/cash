@@ -11,7 +11,7 @@ const Navbar = async () => {
   } = await supabase.auth.getSession();
 
   return (
-    <nav className="border-b border-gray-200">
+    <nav className="border-b border-gray-200 ">
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <div className="flex space-x-4">

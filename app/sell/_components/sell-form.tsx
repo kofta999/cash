@@ -34,66 +34,68 @@ const SellForm = ({ userId }: SellFormProps) => {
   }, [images, setValue]);
 
   return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        console.log(data);
-        createProduct({ ...data, userId });
-      })}
-    >
-      <h1>post your Ad</h1>
-      <div className="choice-container mb-4 border border-gray-300 rounded-md px-4 py-2">
-        {choices.map((choice, index) => (
-          <div key={index} className="choice-item">
-            <input
-              type="radio"
-              id={choice}
-              value={choice}
-              {...register("type")}
-            />
-            <label htmlFor={choice}>{choice}</label>
+    <div className="container mx-auto  rounded-lg"> {/* Outer form container */}
+    <form onSubmit={handleSubmit((data) => {
+      console.log(data);
+      createProduct({ ...data, userId });
+    })}>
+      <div className="bg-white p-4 rounded-lg shadow-md"> {/* Form container */}
+        <h1 className="text-2xl font-bold text-center mb-4">Post Your Ad</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="choice-container mb-4 border border-gray-300 rounded-md px-4 py-2">
+            <h2 className="text-xl font-semibold mb-2">Category:</h2>
+            {choices.map((choice, index) => (
+              <div key={index} className="choice-item">
+                <input
+                  type="radio"
+                  id={choice}
+                  value={choice}
+                  {...register("type")}
+                />
+                <label htmlFor={choice}>{choice}</label>
+              </div>
+            ))}
           </div>
-        ))}
+          <div className="title-container mb-4 border border-gray-300 rounded-md px-4 py-2">
+            <h2 className="text-xl font-semibold mb-2">Ad Title:</h2>
+            <input
+              className="input input-bordered w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="text"
+              id="title"
+              {...register("title")}
+              placeholder="Enter a descriptive title for your ad"
+            />
+          </div>
+        </div>
+        <div className="mb-4 border border-gray-300 rounded-md px-4 py-2">
+          <h2 className="text-xl font-semibold mb-2">Description:</h2>
+          <textarea
+            id="description"
+            {...register("description")}
+            placeholder="Describe your product and additional details (brand, size, material, etc.)"
+            className="w-full h-48 resize-none overflow-auto bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <ImageUploader setImages={setImages} images={images} userId={userId} />
+        <div className="governorate-container mb-4 border border-gray-300 rounded-md px-4 py-2">
+          <h2 className="text-xl font-semibold mb-2">Location:</h2>
+          <select id="governorate" {...register("governorate")}>
+            <option value="">Select Governorate</option>
+            {governorates.map((governorate, index) => (
+              <option key={index} value={governorate.value}>
+                {governorate.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <SubmitButton pendingText="Submitting..." type="submit">
+          Submit
+        </SubmitButton>
       </div>
-      <div className="title-container mb-4 border border-gray-300 rounded-md px-4 py-2">
-        {/* Title input container */}
-        <label htmlFor="title">Ad Title :</label>
-        <input
-          className="input input-bordered"
-          type="text"
-          id="title"
-          {...register("title")}
-          placeholder="Enter a descriptive title for your ad"
-        />
-      </div>
-
-      <div className="title-container mb-4 border border-gray-300 rounded-md px-4 py-2">
-        <label htmlFor="description"> Description:</label>
-        <textarea
-          id="description"
-          {...register("description")}
-          placeholder="Describe your product and additional details (brand, size, material, etc.)"
-          className="w-full h-48 resize-none overflow-auto"
-        />
-      </div>
-
-      <ImageUploader setImages={setImages} images={images} userId={userId} />
-
-      <div className="governorate-container mb-4 border-gray-300 rouded-md px-4 py-2">
-        <label htmlFor="governorate">Location:</label>
-        <select id="governorate" {...register("governorate")}>
-          <option value="">Select Governorate</option>
-          {governorates.map((governorate, index) => (
-            <option key={index} value={governorate.value}>
-              {governorate.label}
-            </option>
-          ))}
-        </select>
-      </div>
-      <SubmitButton pendingText="Submitting..." type="submit">
-        Submit
-      </SubmitButton>
     </form>
-  );
+  </div>
+);
 };
+
 
 export default SellForm;

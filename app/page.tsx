@@ -1,7 +1,10 @@
 import React from "react";
 
 const MyApp = () => {
-  return <></>;
+  return
+ <div>
+  <p>kkkkk</p>
+ </div>
 };
 
 export default MyApp;
