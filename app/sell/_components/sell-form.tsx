@@ -34,15 +34,15 @@ const SellForm = ({ userId }: SellFormProps) => {
   }, [images, setValue]);
 
   return (
-    <div className="container mx-auto  rounded-lg"> {/* Outer form container */}
+    <div className=" mx-auto my-5 "> {/* Outer form container */}
     <form onSubmit={handleSubmit((data) => {
       console.log(data);
       createProduct({ ...data, userId });
     })}>
-      <div className="bg-white p-4 rounded-lg shadow-md"> {/* Form container */}
+      <div className="bg-white p-4 shadow-md"> {/* Form container */}
         <h1 className="text-2xl font-bold text-center mb-4">Post Your Ad</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="choice-container mb-4 border border-gray-300 rounded-md px-4 py-2">
+        <div className="lex flex-col md:grid md:grid-cols-2 gap-4">
+          <div className="choice-container mb-4 border border-gray-100 px-4 py-2">
             <h2 className="text-xl font-semibold mb-2">Category:</h2>
             {choices.map((choice, index) => (
               <div key={index} className="choice-item">
@@ -56,10 +56,10 @@ const SellForm = ({ userId }: SellFormProps) => {
               </div>
             ))}
           </div>
-          <div className="title-container mb-4 border border-gray-300 rounded-md px-4 py-2">
+          <div className="title-container mb-4 border border-gray-100 px-4 py-2">
             <h2 className="text-xl font-semibold mb-2">Ad Title:</h2>
             <input
-              className="input input-bordered w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input input-bordered w-full bg-white border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               type="text"
               id="title"
               {...register("title")}
@@ -67,17 +67,17 @@ const SellForm = ({ userId }: SellFormProps) => {
             />
           </div>
         </div>
-        <div className="mb-4 border border-gray-300 rounded-md px-4 py-2">
+        <div className="mb-4 border border-gray-100 px-4 py-2">
           <h2 className="text-xl font-semibold mb-2">Description:</h2>
           <textarea
             id="description"
             {...register("description")}
             placeholder="Describe your product and additional details (brand, size, material, etc.)"
-            className="w-full h-48 resize-none overflow-auto bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full h-48 resize-none overflow-auto bg-white border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <ImageUploader setImages={setImages} images={images} userId={userId} />
-        <div className="governorate-container mb-4 border border-gray-300 rounded-md px-4 py-2">
+        <div className="governorate-container mb-4 border border-gray-100 px-4 py-2">
           <h2 className="text-xl font-semibold mb-2">Location:</h2>
           <select id="governorate" {...register("governorate")}>
             <option value="">Select Governorate</option>

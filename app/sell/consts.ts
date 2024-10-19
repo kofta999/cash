@@ -6,8 +6,6 @@ interface Choice {
 }
 
 export const choices = [
-  "Unisex Clothes",
-  "Unisex Accessories",
   "Women's Clothes",
   "Men's Clothing",
   "Women's Accessories",
