@@ -37,7 +37,7 @@ export default function ImageUploader({
     if (newFiles) {
       const newFilesArray = Array.from(newFiles);
       const uploadPromises = newFilesArray.map(async (file, index) => {
-        const filename = `${userId}/temp/${Date.now()}-${index}-${file.name}`;
+        const filename = `${userId}/temp/${Date.now()}-${index}.${file.name.split(".")[1]}`;
         const { data, error } = await supabase.storage
           .from("product-images")
           .upload(filename, file);

@@ -5,8 +5,9 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { SellFormSchema } from "../sell/consts";
+import { randomUUID } from "crypto";
 
-export async function getUserProducts() {
+export async function getSelfProducts() {
   const supabase = createClient();
   const { data, error } = await supabase.auth.getUser();
 
@@ -25,6 +26,20 @@ export async function getUserProducts() {
   return userProudcts;
 }
 
+export async function getSellerInfo(slug: string) {
+  // Add table for user info linked by the UID
+  const sellerProducts = await prisma.product.findMany({
+    where: { userId: slug },
+    select: {
+      id: true,
+      title: true,
+      imageUrls: true,
+    },
+  });
+
+  return sellerProducts;
+}
+
 export async function createProduct(
   productData: SellFormSchema & { userId: string },
 ) {
@@ -39,76 +54,69 @@ export async function createProduct(
   });
 
   const result = sellFormSchema.safeParse(productData);
-  let prodId;
+  let prodId = randomUUID();
 
-  if (result.success) {
-    const supabase = createClient();
-
-    const productData = result.data;
-
-    try {
-      const { id: productId } = await prisma.product.create({
-        data: { ...productData, imageUrls: [] },
-        select: { id: true },
-      });
-
-      prodId = productId;
-
-      const imageUrls = await Promise.all(
-        productData.imageUrls.map(async (imgUrl, i) => {
-          imgUrl = imgUrl.split("product-images/")[1];
-          const newUrl = imgUrl.replace("temp", productId);
-
-          const { error: folderError } = await supabase.storage
-            .from("product-images")
-            .upload(`${productData.userId}/${productId}/placeholder.txt`, "", {
-              upsert: true,
-            });
-
-          if (folderError) {
-            throw folderError;
-          }
-
-          const { data, error } = await supabase.storage
-            .from("product-images")
-            .move(imgUrl, newUrl);
-
-          if (error) {
-            throw error;
-          }
-
-          return newUrl;
-        }),
-      );
-
-      console.log("uploaded", imageUrls);
-
-      await prisma.product.update({
-        where: { id: productId },
-        data: { imageUrls },
-      });
-
-      const { data: list, error: e } = await supabase.storage
-        .from("product-images")
-        .list(`${productData.userId}/temp`);
-
-      if (e) {
-        throw e;
-      }
-
-      const filesToRemove = list.map(
-        (x) => `${productData.userId}/temp/${x.name}`,
-      );
-
-      await supabase.storage.from("product-images").remove(filesToRemove);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      if (prodId) {
-        return redirect(`/products/${prodId}`);
-      }
-    }
-  } else {
+  if (!result.success) {
     throw new Error("Invalid input");
+  }
+
+  const supabase = createClient();
+
+  const data = result.data;
+
+  try {
+    const imageUrls = await Promise.all(
+      productData.imageUrls.map(async (imgUrl) => {
+        const baseUrl = imgUrl.split("product-images/")[0];
+        imgUrl = imgUrl.split("product-images/")[1];
+        const newUrl = imgUrl.replace("temp", prodId);
+
+        const { error: folderError } = await supabase.storage
+          .from("product-images")
+          .upload(`${productData.userId}/${prodId}/placeholder.txt`, "", {
+            upsert: true,
+          });
+
+        if (folderError) {
+          throw folderError;
+        }
+
+        const { data, error } = await supabase.storage
+          .from("product-images")
+          .move(imgUrl, newUrl);
+
+        console.log(error, imgUrl, newUrl);
+
+        if (error) {
+          throw error;
+        }
+
+        return baseUrl + "product-images/" + newUrl;
+      }),
+    );
+
+    console.log("uploaded", imageUrls);
+
+    await prisma.product.create({
+      data: { ...data, imageUrls, id: prodId },
+    });
+
+    const { data: list, error: e } = await supabase.storage
+      .from("product-images")
+      .list(`${productData.userId}/temp`);
+
+    if (e) {
+      throw e;
+    }
+
+    const filesToRemove = list.map(
+      (x) => `${productData.userId}/temp/${x.name}`,
+    );
+
+    await supabase.storage.from("product-images").remove(filesToRemove);
+  } catch (e) {
+    console.log(e);
+  } finally {
+    // return redirect(`/products/${prodId}`);
   }
 }
