@@ -1,5 +1,5 @@
 import { getSellerInfo } from "./actions";
-import ProductList from "./_components/product-list";
+import ProductList from "@/components/product-list";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   // TODO: Use something other than the UID for slugs

@@ -4,7 +4,7 @@ import Link from "next/link";
 export interface ProductCardProps {
   id: string;
   title: string;
-  thumbnailUrl: string;
+  thumbnailUrl?: string;
 }
 
 export default function ProductCard({
@@ -19,7 +19,10 @@ export default function ProductCard({
           <Image
             id={id}
             alt={title}
-            src={thumbnailUrl}
+            src={
+              thumbnailUrl ||
+              "https://foremanbrosinc.com/wp-content/uploads/2017/05/1c0d0f0cb8b7f2fb2685da9798efe42b_big-image-png-image-placeholder-clipart_2400-2400-300x300.png"
+            }
             width={300}
             height={500}
             quality={30}

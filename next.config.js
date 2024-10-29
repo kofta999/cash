@@ -7,6 +7,10 @@ const nextConfig = {
         protocol: "https",
         port: "",
       },
+      {
+        hostname: "foremanbrosinc.com",
+        protocol: "https",
+      },
     ],
   },
 };
