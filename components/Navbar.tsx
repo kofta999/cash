@@ -32,7 +32,6 @@ const Navbar = async () => {
         ) : (
           <>
             <Link href="/sign-in">Sign in</Link>
-            <Link href="/sign-up">Sign up</Link>
           </>
         )}
       </div>
