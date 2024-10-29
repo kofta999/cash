@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export interface ProductCardProps {
   id: string;
@@ -12,9 +13,23 @@ export default function ProductCard({
   thumbnailUrl,
 }: ProductCardProps) {
   return (
-    <div>
-      <Image id={id} alt={title} src={thumbnailUrl} width={100} height={200} />
-      <h5>{title}</h5>
-    </div>
+    <Link href={`/products/${id}`}>
+      <div className="card bg-base-100 w-72 shadow-xl">
+        <figure>
+          <Image
+            id={id}
+            alt={title}
+            src={thumbnailUrl}
+            width={300}
+            height={500}
+            quality={30}
+          />
+        </figure>
+        <div className="card-body items-center text-center">
+          {/* // TODO: Add price  */}
+          <h2 className="card-title">{title}</h2>
+        </div>
+      </div>
+    </Link>
   );
 }

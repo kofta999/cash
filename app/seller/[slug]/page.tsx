@@ -1,4 +1,4 @@
-import { getSellerInfo } from "@/app/actions";
+import { getSellerInfo } from "./actions";
 import ProductList from "./_components/product-list";
 
 export default async function Page({ params }: { params: { slug: string } }) {
