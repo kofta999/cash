@@ -10,7 +10,7 @@ import {
 import { SubmitButton } from "@/components/submit-button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createProduct } from "@/app/actions";
+import { createProduct } from "../actions";
 
 interface SellFormProps {
   userId: string;
