@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from "daisyui";
 
 const config = {
   content: [
@@ -12,7 +12,12 @@ const config = {
       // You can keep any custom extensions you need here
     },
   },
+  daisyui: {
+    themes: ["winter", "business"],
+    darkTheme: "business",
+  } satisfies Config,
+
   plugins: [require("daisyui")],
-} satisfies Config;
+};
 
 export default config;
