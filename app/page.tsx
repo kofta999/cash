@@ -1,12 +1,14 @@
 import ProductList from "@/components/product-list";
 import React from "react";
+import { getAllProducts } from "./actions/getAllProducts";
 
-const MyApp = () => {
-  // action
+
+const MyApp = async () => {
+  const products = await getAllProducts();
 
   return (
     <div>
-      <ProductList products={[{ id: "test", title: "test" }]} />
+      <ProductList products={products} />
     </div>
   );
 };
