@@ -1,8 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider  = "postgresql"
@@ -10,24 +8,29 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
+model Product {
+  id          String   @id
+  title       String
+  description String
+  sizes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String
+  imageUrls   String[]
+  type        String
+  governorate String
+}
+
+model Profile {
+  id          String   @id(map: "profiles_pkey") @db.Uuid
+  name        String
+  profileUrl  String?
+  bio         String?
+  phoneNumber String?
+  links       String[]
 }
 
 enum ProductType {
   UpperBody
   LowerBody
-}
-
-model Product {
-  id          String   @id
-  userId      String
-  title       String
-  description String
-  governorate String
-  imageUrls   String[]
-  sizes       String?
-  type        String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 }

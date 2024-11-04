@@ -4,6 +4,7 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import prisma from "@/lib/db";
 
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
@@ -15,7 +16,7 @@ export const signUpAction = async (formData: FormData) => {
     return { error: "Email and password are required" };
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { error, data: { user } } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -23,10 +24,18 @@ export const signUpAction = async (formData: FormData) => {
     },
   });
 
+
   if (error) {
     console.error(error.code + " " + error.message);
     return encodedRedirect("error", "/sign-up", error.message);
   } else {
+    await prisma.profile.create({
+      data: {
+        id: user!.id,
+        phoneNumber: user!.phone,
+        // TODO: Add name
+      }
+    })
     return encodedRedirect(
       "success",
       "/sign-up",
