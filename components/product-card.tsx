@@ -26,6 +26,7 @@ export default function ProductCard({
             width={300}
             height={500}
             quality={30}
+            priority
           />
         </figure>
         <div className="card-body items-center text-center">

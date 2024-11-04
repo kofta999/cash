@@ -12,5 +12,7 @@ export async function getSellerInfo(slug: string) {
     },
   });
 
+
+
   return sellerProducts;
 }
