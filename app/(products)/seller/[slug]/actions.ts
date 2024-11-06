@@ -1,5 +1,6 @@
 "use server";
 import prisma from "@/lib/db";
+import { formatProductCards } from "@/lib/utils";
 
 export async function getSellerInfo(slug: string) {
   // Add table for user info linked by the UID
@@ -16,5 +17,6 @@ export async function getSellerInfo(slug: string) {
     prisma.profile.findUnique({ where: { id: slug } })
   ])
 
-  return { sellerProducts, sellerProfile };
+  console.log(sellerProducts);
+  return { sellerProducts: formatProductCards(sellerProducts), sellerProfile };
 }

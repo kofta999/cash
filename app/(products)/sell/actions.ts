@@ -4,7 +4,7 @@ import prisma from "@/lib/db";
 import { randomUUID } from "crypto";
 import { z } from "zod";
 import { SellFormSchema, sellFormSchema } from "./consts";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 export async function createProduct(

@@ -1,21 +1,18 @@
 // actions/getAllProducts.ts
-
-
-import ProductList from '@/components/product-list';
 import prisma from '@/lib/db';
-import { use } from 'react';
-
+import { formatProductCards } from '@/lib/utils';
 
 export async function getAllProducts() {
   const products = await prisma.product.findMany({
     orderBy: {
       createdAt: 'desc',
     },
-    select :{
-      id:true,
+    select: {
+      id: true,
       title: true,
       imageUrls: true,
     },
   });
-  return products;
+
+  return formatProductCards(products);
 }

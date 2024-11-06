@@ -15,13 +15,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <div>
       <SellerProfile name="PLACEHOLDER" {...sellerProfile} />
-      <ProductList
-        products={sellerProducts.map(({ id, title, imageUrls }) => ({
-          id,
-          title,
-          thumbnailUrl: imageUrls[0],
-        }))}
-      />
+      <ProductList products={sellerProducts} />
     </div>
   );
 }

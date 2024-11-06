@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Searchbar from "./Searchbar";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import LogoutButton from "./logout-button";
 
 const Navbar = async () => {
