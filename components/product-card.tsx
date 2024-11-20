@@ -30,12 +30,8 @@ export default function ProductCard({
             priority
           />
         </figure>
-<<<<<<< HEAD
        <div className="card-body items-center text-center">
           {/* // TODO: Add price  */}
-=======
-        <div className="card-body items-center text-center">
->>>>>>> b42420b3f5380a1a1376cb4a80666c5cf3495d63
           <h2 className="card-title">{title}</h2>
           <h4 className="text-left">EGP {price}</h4>
         </div>
