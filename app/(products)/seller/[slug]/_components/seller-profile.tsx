@@ -2,26 +2,26 @@ import Image from "next/image";
 import SellerLinks from "./seller-links";
 
 interface SellerProfileProps {
-  name: string;
+  full_name: string | null;
   bio: string | null;
-  phoneNumber: string | null;
-  profileUrl: string | null;
+  phone_number: string | null;
+  avatar: string | null;
   links: string[] | null;
 }
 
 export default function SellerProfile({
-  name,
+  full_name,
   bio,
-  phoneNumber,
+  phone_number,
   links,
-  profileUrl,
+  avatar,
 }: SellerProfileProps) {
   // Should phone number be private like dubizzle?
   return (
     <div>
-      {/* <Image /> */}
+      <Image src={avatar!} alt="avatar image" width={200} height={200} />
       <div>
-        <h2>{name}</h2>
+        <h2>{full_name}</h2>
         <p>{bio}</p>
         {links && <SellerLinks links={links} />}
       </div>

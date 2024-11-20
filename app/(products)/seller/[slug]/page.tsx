@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div>
-      <SellerProfile name="PLACEHOLDER" {...sellerProfile} />
+      <SellerProfile {...sellerProfile} />
       <ProductList products={sellerProducts} />
     </div>
   );
