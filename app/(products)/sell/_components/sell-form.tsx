@@ -98,20 +98,19 @@ const SellForm = ({ userId }: SellFormProps) => {
               ))}
             </select>
           </div>
-
           <div className="title-container mb-4 border border-gray-300 px-4 py-2">
-              <h2 className="text-xl font-semibold mb-2">Price:</h2>
-              <input
-                className="input input-bordered w-full bg-base-300 border border-secondary px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-             /*
+            <h2 className="text-xl font-semibold mb-2">Price:</h2>
+            <input
+              className="input input-bordered w-full bg-base-300 border border-secondary px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              /*
              make it functional
-             type=""
-                id=""
-                {...register("")}
-                placeholder="Enter a price in EGP" */
-              />
-            </div>
-
+             */
+              type="number"
+              id="price"
+              {...register("price")}
+              placeholder="Enter a price in EGP"
+            />
+          </div>
           <SubmitButton pendingText="Submitting..." type="submit">
             Submit
           </SubmitButton>

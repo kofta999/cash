@@ -27,8 +27,8 @@ export async function createProduct(
     ),
   );
 
-  await prisma.product.create({
-    data: { ...data, imageUrls, id: prodId },
+  await prisma.products.create({
+    data: { ...data, imageUrls, id: prodId, updatedAt: (() => new Date())() },
   });
 
   deleteTempImages(data.userId);
