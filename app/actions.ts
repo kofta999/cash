@@ -3,7 +3,7 @@ import prisma from '@/lib/db';
 import { formatProductCards } from '@/lib/utils';
 
 export async function getAllProducts() {
-  const products = await prisma.product.findMany({
+  const products = await prisma.products.findMany({
     orderBy: {
       createdAt: 'desc',
     },

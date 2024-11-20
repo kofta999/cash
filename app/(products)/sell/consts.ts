@@ -47,6 +47,7 @@ export const sellFormSchema = z.object({
   description: z.string(),
   imageUrls: z.array(z.string()),
   governorate: z.string().min(1),
+  price: z.coerce.number()
 });
 
 export type SellFormSchema = z.infer<typeof sellFormSchema>;

@@ -6,7 +6,7 @@ export async function getSellerInfo(slug: string) {
   // Add table for user info linked by the UID
   // Fetch the user's name too
   const [sellerProducts, sellerProfile] = await Promise.all([
-    prisma.product.findMany({
+    prisma.products.findMany({
       where: { userId: slug },
       select: {
         id: true,
