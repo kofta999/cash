@@ -14,7 +14,7 @@ export default function ProductCard({
 }: ProductCardProps) {
   return (
     <Link href={`/products/${id}`}>
-      <div className="card bg-base-100 w-72 shadow-xl">
+      <div className=" bg-base-100 w-72 m-5 shadow-xl">
         <figure>
           <Image
             id={id}
@@ -29,7 +29,7 @@ export default function ProductCard({
             priority
           />
         </figure>
-        <div className="card-body items-center text-center">
+       <div className="card-body items-center text-center">
           {/* // TODO: Add price  */}
           <h2 className="card-title">{title}</h2>
         </div>
