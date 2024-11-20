@@ -11,6 +11,10 @@ const nextConfig = {
         hostname: "foremanbrosinc.com",
         protocol: "https",
       },
+      {
+        hostname: "lh3.googleusercontent.com",
+        protocol: "https",
+      },
     ],
   },
 };

@@ -12,11 +12,11 @@ export async function getSellerInfo(slug: string) {
         id: true,
         title: true,
         imageUrls: true,
+        price: true
       },
     }),
-    prisma.profile.findUnique({ where: { id: slug } })
+    prisma.profiles.findUnique({ where: { id: slug } })
   ])
 
-  console.log(sellerProducts);
   return { sellerProducts: formatProductCards(sellerProducts), sellerProfile };
 }

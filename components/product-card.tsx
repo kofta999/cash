@@ -1,9 +1,11 @@
+import { placeHolderImageUrl } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 
 export interface ProductCardProps {
   id: string;
   title: string;
+  price: number;
   thumbnailUrl?: string;
 }
 
@@ -11,6 +13,7 @@ export default function ProductCard({
   id,
   title,
   thumbnailUrl,
+  price,
 }: ProductCardProps) {
   return (
     <Link href={`/products/${id}`}>
@@ -19,10 +22,7 @@ export default function ProductCard({
           <Image
             id={id}
             alt={title}
-            src={
-              thumbnailUrl ||
-              "https://foremanbrosinc.com/wp-content/uploads/2017/05/1c0d0f0cb8b7f2fb2685da9798efe42b_big-image-png-image-placeholder-clipart_2400-2400-300x300.png"
-            }
+            src={thumbnailUrl || placeHolderImageUrl}
             width={300}
             height={500}
       
@@ -30,9 +30,14 @@ export default function ProductCard({
             priority
           />
         </figure>
+<<<<<<< HEAD
        <div className="card-body items-center text-center">
           {/* // TODO: Add price  */}
+=======
+        <div className="card-body items-center text-center">
+>>>>>>> b42420b3f5380a1a1376cb4a80666c5cf3495d63
           <h2 className="card-title">{title}</h2>
+          <h4 className="text-left">EGP {price}</h4>
         </div>
       </div>
     </Link>
