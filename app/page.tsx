@@ -8,14 +8,15 @@ const MyApp = async () => {
 
   return (
     <div>
-      <Image
-        src="/homepagecover.jpg"
-        alt="home page cover of two girls thrifting"
-        width={500}
-        height={300}
-        objectFit="cover"
-        layout="responsive"
-      />
+      <div className="relative h-screen bg-no-repeat bg-cover">
+        <Image
+          src="/homepagecover.jpg"
+          alt="home page cover of two girls thrifting"
+          layout="fill"
+          objectFit="cover"
+          priority
+        />
+      </div>
       <ProductList products={products} />
     </div>
   );

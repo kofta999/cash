@@ -11,7 +11,7 @@ const Navbar = async () => {
   } = await supabase.auth.getSession();
 
   return (
-    <nav className="navbar bg-base-100 border-b border-base-300">
+    <nav className="navbar bg-base-100 border-b ">
       <div className="navbar-start">
         <Link className="btn btn-ghost text-xl" href="/">
           Home

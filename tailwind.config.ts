@@ -13,7 +13,7 @@ const config = {
     },
   },
   daisyui: {
-    themes: ["winter", "business"],
+    themes: [],
     darkTheme: "business",
   } satisfies Config,
 

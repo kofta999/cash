@@ -43,12 +43,12 @@ const SellForm = ({ userId }: SellFormProps) => {
           createProduct({ ...data, userId });
         })}
       >
-        <div className="bg-base-300 p-4 shadow-md">
+        <div className="bg-base-300 mt-8 p-4 shadow-md">
           {" "}
           {/* Form container */}
           <h1 className="text-2xl font-bold text-center mb-4">Post Your Ad</h1>
           <div className="lex flex-col md:grid md:grid-cols-2 gap-4">
-            <div className="choice-container mb-4 border border-secondary px-4 py-2">
+            <div className="choice-container mb-4 border border-gray-300 px-4 py-2">
               <h2 className="text-xl font-semibold mb-2">Category:</h2>
               {choices.map((choice, index) => (
                 <div key={index} className="choice-item">
@@ -62,7 +62,7 @@ const SellForm = ({ userId }: SellFormProps) => {
                 </div>
               ))}
             </div>
-            <div className="title-container mb-4 border border-secondary px-4 py-2">
+            <div className="title-container mb-4 border border-gray-300 px-4 py-2">
               <h2 className="text-xl font-semibold mb-2">Ad Title:</h2>
               <input
                 className="input input-bordered w-full bg-base-300 border border-secondary px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -73,7 +73,7 @@ const SellForm = ({ userId }: SellFormProps) => {
               />
             </div>
           </div>
-          <div className="mb-4 border border-secondary px-4 py-2">
+          <div className="mb-4 border border-gray-300 px-4 py-2">
             <h2 className="text-xl font-semibold mb-2">Description:</h2>
             <textarea
               id="description"
@@ -87,7 +87,7 @@ const SellForm = ({ userId }: SellFormProps) => {
             images={images}
             userId={userId}
           />
-          <div className="governorate-container mb-4 border border-secondary px-4 py-2">
+          <div className="governorate-container mb-4 border border-gray-300 px-4 py-2">
             <h2 className="text-xl font-semibold mb-2">Location:</h2>
             <select id="governorate" {...register("governorate")}>
               <option value="">Select Governorate</option>
@@ -98,6 +98,20 @@ const SellForm = ({ userId }: SellFormProps) => {
               ))}
             </select>
           </div>
+
+          <div className="title-container mb-4 border border-gray-300 px-4 py-2">
+              <h2 className="text-xl font-semibold mb-2">Price:</h2>
+              <input
+                className="input input-bordered w-full bg-base-300 border border-secondary px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+             /*
+             make it functional
+             type=""
+                id=""
+                {...register("")}
+                placeholder="Enter a price in EGP" */
+              />
+            </div>
+
           <SubmitButton pendingText="Submitting..." type="submit">
             Submit
           </SubmitButton>

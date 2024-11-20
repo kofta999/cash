@@ -14,7 +14,7 @@ export default function ProductCard({
 }: ProductCardProps) {
   return (
     <Link href={`/products/${id}`}>
-      <div className=" bg-base-100 w-72 m-5 shadow-xl">
+      <div className=" bg-base-100 w-72 h-96 m-5 shadow-xl">
         <figure>
           <Image
             id={id}
@@ -25,6 +25,7 @@ export default function ProductCard({
             }
             width={300}
             height={500}
+      
             quality={30}
             priority
           />
