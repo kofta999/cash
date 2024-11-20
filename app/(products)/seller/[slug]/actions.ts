@@ -12,6 +12,7 @@ export async function getSellerInfo(slug: string) {
         id: true,
         title: true,
         imageUrls: true,
+        price: true
       },
     }),
     prisma.profile.findUnique({ where: { id: slug } })

@@ -4,6 +4,7 @@ import Link from "next/link";
 export interface ProductCardProps {
   id: string;
   title: string;
+  price: number;
   thumbnailUrl?: string;
 }
 
@@ -11,6 +12,7 @@ export default function ProductCard({
   id,
   title,
   thumbnailUrl,
+  price,
 }: ProductCardProps) {
   return (
     <Link href={`/products/${id}`}>
@@ -30,8 +32,8 @@ export default function ProductCard({
           />
         </figure>
         <div className="card-body items-center text-center">
-          {/* // TODO: Add price  */}
           <h2 className="card-title">{title}</h2>
+          <h4 className="text-left">EGP {price}</h4>
         </div>
       </div>
     </Link>

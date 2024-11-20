@@ -17,17 +17,17 @@ model Product {
   updatedAt   DateTime @updatedAt
   userId      String
   imageUrls   String[]
+  price       Float
   type        String
   governorate String
 }
 
 model Profile {
   id          String   @id(map: "profiles_pkey") @db.Uuid
-  name        String
-  profileUrl  String?
   bio         String?
-  phoneNumber String?
   links       String[]
+  phoneNumber String?
+  profileUrl  String?
 }
 
 enum ProductType {
