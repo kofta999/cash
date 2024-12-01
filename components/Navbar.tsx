@@ -11,7 +11,7 @@ const Navbar = async () => {
   } = await supabase.auth.getSession();
 
   return (
-    <nav className="navbar bg-base-100 border-b ">
+    <nav className="navbar mb-5 border-b fixed top-0 left-0 w-full bg-white z-50">
       <div className="navbar-start">
         <Link className="btn btn-ghost text-xl" href="/">
           Home
@@ -23,7 +23,8 @@ const Navbar = async () => {
 
       <div className="navbar-end flex gap-10">
         <Link href="/sell">
-          <button className="btn w-20">Sell</button>
+          <button className="btn w-20 bg-emerald-500 text-white hover:bg-opacity-80">Sell</button>
+          
         </Link>
         {/* TODO: Cart Route */}
         {/* <Link href="/cart">Cart</Link> */}

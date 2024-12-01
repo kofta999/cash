@@ -1,5 +1,5 @@
 import React from 'react';
-import { getProductInfo } from './actions'; // Assuming actions file exports getProductInfo
+import { getProductInfo } from './actions'; 
 
 interface Product {
   id: string;
@@ -37,19 +37,24 @@ function ProductDetails({ product }: { product: Product }) {
   } = product;
 
   const formattedDate = new Date(createdAt).toLocaleDateString(); // Format created date
-  const formattedPrice = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price); // Format price
-
+  const formattedPrice = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EGP' }).format(price);
   return (
-    <div className="product-details">
-      <img src={imageUrls[0]} alt={title} className="product-image" />
-      <div className="product-info">
-        <h2>{title}</h2>
-
-        <p className="price">{formattedPrice}</p>
-        <p className="type">Category: {type}</p>
-        <p className="location">Location: {governorate}</p>
-        <p className="seller">Seller: {full_name}</p>
-        <p className="created-at">Created: {formattedDate}</p>
+    <div className="product-details flex flex-col md:flex-row mt-20">
+      <div className="md:w-1/2">
+  <img src={imageUrls[0]} alt={title} className="w-full h-auto max-w-sm" />
+</div>
+      <div className="md:w-1/2 md:ml-8">
+        <h2 className="text-3xl font-bold mb-4">{title}</h2>
+        <p className="text-lg mb-2">{description}</p>
+        <div className="flex items-center mb-4">
+          <p className="text-xl font-bold mr-2">{formattedPrice}</p>
+          {/* Add any relevant badges or labels here */}
+        </div>
+        <p className="text-gray-600 mb-2">Category: {type}</p>
+        <p className="text-gray-600 mb-2">Location: {governorate}</p>
+        <p className="text-gray-600 mb-2">Seller: {full_name}</p>
+        <p className="text-gray-600">Created: {formattedDate}</p>
+        {/* Add a "Buy Now" or "Add to Cart" button here */}
       </div>
     </div>
   );
