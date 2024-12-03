@@ -1,25 +1,15 @@
 import React from "react";
 import { getProductInfo } from "./actions";
+import type { products as ProductModel } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 
-interface Product {
-  id: string;
-  title: string;
-  description: string;
-  createdAt: Date; // ISO 8601 date string
-  updatedAt: Date; // ISO 8601 date string
-  userId: string;
-  imageUrls: string[];
-  price: number;
-  type: string;
-  governorate: string;
+type Product = ProductModel & {
   users: {
     id: string;
     full_name: string | null;
-    phone_number: string | null;
   };
-}
+};
 
 function ProductDetails({ product }: { product: Product }) {
   const {
@@ -33,6 +23,7 @@ function ProductDetails({ product }: { product: Product }) {
     price,
     type,
     governorate,
+    contactNumber,
     users,
   } = product;
 
@@ -41,11 +32,6 @@ function ProductDetails({ product }: { product: Product }) {
     style: "currency",
     currency: "EGP",
   }).format(price);
-
-  {
-    /* Phone number should be added in the form, and also there should be a way to hide it behind a button to prevent bot scraping or smth idk */
-  }
-  console.log(users.phone_number);
 
   return (
     <div className="product-details flex flex-col md:flex-row mt-20">
@@ -74,6 +60,8 @@ function ProductDetails({ product }: { product: Product }) {
         <Link href={`/seller/${users.id}`} className="text-gray-600 mb-2">
           Seller: <span className="text-green-600">{users.full_name}</span>
         </Link>
+        {/* Phone number should be added in the form, and also there should be a way to hide it behind a button to prevent bot scraping or smth idk */}
+        <p className="text-gray-600">Contact Number: {contactNumber}</p>
         <p className="text-gray-600">Posted: {formattedDate}</p>
         {/* Add a "Buy Now" or "Add to Cart" button here */}
       </div>

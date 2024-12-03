@@ -10,7 +10,6 @@ export async function getProductInfo(slug: string) {
         select: {
           id: true,
           full_name: true,
-          phone_number: true
         }
       }
     }
