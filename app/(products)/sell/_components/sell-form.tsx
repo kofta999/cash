@@ -111,6 +111,21 @@ const SellForm = ({ userId }: SellFormProps) => {
               placeholder="Enter a price in EGP"
             />
           </div>
+          <div className="title-container mb-4 border border-gray-300 px-4 py-2">
+            <h2 className="text-xl font-semibold mb-2">Contact Number:</h2>
+            <input
+              className="input input-bordered w-full bg-base-300 border border-secondary px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              /*
+             make it functional
+             */
+              type="tel"
+              id="contactNumber"
+              {...register("contactNumber")}
+              min={10}
+              max={11}
+              placeholder="Enter a contact number"
+            />
+          </div>
           <SubmitButton pendingText="Submitting..." type="submit">
             Submit
           </SubmitButton>
