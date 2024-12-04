@@ -33,6 +33,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatProductCards<T extends { imageUrls: string[] }>(products: T[]) {
-  return products.map(({ imageUrls, ...rest }) => ({ thumbnailUrl: imageUrls.at(0), ...rest }))
+export function formatProductCards<T extends { imageUrls: string[], likes: any[] | undefined }>(products: T[]) {
+  return products.map(({ imageUrls, likes, ...rest }) => ({ thumbnailUrl: imageUrls.at(0), liked: !!likes?.length, ...rest }))
 }
