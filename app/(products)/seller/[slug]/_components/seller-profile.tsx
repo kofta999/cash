@@ -15,14 +15,22 @@ export default function SellerProfile({
   phone_number,
   links,
   avatar,
+  contactNumber,
 }: SellerProfileProps) {
-  // Should phone number be private like dubizzle?
   return (
-    <div>
-      <Image src={avatar!} alt="avatar image" width={200} height={200} />
-      <div>
-        <h2>{full_name}</h2>
-        <p>{bio}</p>
+    <div className="flex flex-col items-center p-6 bg-card rounded-xl ">
+      <div className="relative w-[200px] h-[200px] rounded-full overflow-hidden mb-6">
+        <Image
+          src={avatar!}
+          alt={`${full_name}'s avatar`}
+          fill
+          className="object-cover"
+          sizes="200px"
+        />
+      </div>
+      <div className="text-center">
+        <h2 className="text-4xl font-semibold text-card-foreground mb-2">{full_name}</h2>
+        {bio && <p className="text-muted-foreground mb-4">{bio}</p>}
         {links && <SellerLinks links={links} />}
       </div>
     </div>
