@@ -1,10 +1,14 @@
 "use server";
 import prisma from "@/lib/db";
+import { createClient } from "@/lib/supabase/server";
 import { formatProductCards } from "@/lib/utils";
 
 export async function getSellerInfo(slug: string) {
-  // Add table for user info linked by the UID
-  // Fetch the user's name too
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const userId = user?.id
+
   const [sellerProducts, sellerProfile] = await Promise.all([
     prisma.products.findMany({
       where: { userId: slug },
@@ -12,11 +16,25 @@ export async function getSellerInfo(slug: string) {
         id: true,
         title: true,
         imageUrls: true,
-        price: true
+        price: true,
+        ...
+        (
+          userId ? {
+            likes: {
+              where: {
+                userId
+              }
+            }
+          } : {}
+        )
       },
     }),
+
     prisma.profiles.findUnique({ where: { id: slug } })
   ])
+
+
+  console.log(sellerProducts);
 
   return { sellerProducts: formatProductCards(sellerProducts), sellerProfile };
 }

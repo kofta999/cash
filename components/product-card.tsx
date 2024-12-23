@@ -1,16 +1,15 @@
-"use client";
-
 import { placeHolderImageUrl } from "@/lib/constants";
-import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import LikeButton from "./like-button";
+import { toggleLikeProduct } from "@/lib/actions/products";
 
 export interface ProductCardProps {
   id: string;
   title: string;
   price: number;
   thumbnailUrl?: string;
+  liked: boolean;
 }
 
 export default function ProductCard({
@@ -18,13 +17,9 @@ export default function ProductCard({
   title,
   thumbnailUrl,
   price,
+  liked,
 }: ProductCardProps) {
-  const [isLiked, setIsLiked] = useState(false);
-
-  const handleLikeClick = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent Link navigation when clicking the heart
-    setIsLiked(!isLiked);
-  };
+  const toggleLike = toggleLikeProduct.bind(null, id);
 
   return (
     <Link href={`/products/${id}`}>
@@ -47,17 +42,8 @@ export default function ProductCard({
             <p className="text-lg font-bold text-primary">
               EGP {price.toLocaleString()}
             </p>
-            <button
-              onClick={handleLikeClick}
-              className="btn btn-circle btn-sm hover:bg-pink-50"
-            >
-              <Heart
-                className={`w-5 h-5 transition-colors ${
-                  isLiked ? "fill-red-500 stroke-red-500" : "stroke-gray-500"
-                }`}
-              />
-            </button>
           </div>
+          <LikeButton setLike={toggleLike} liked={liked} />
         </div>
       </div>
     </Link>
