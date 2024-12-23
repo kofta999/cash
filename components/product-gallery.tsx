@@ -37,7 +37,7 @@ export function ProductGallery({ images, title }: ProductGalleryProps) {
               onClick={() => setSelectedImage(index)}
               className={cn(
                 "relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md",
-                selectedImage === index && "ring-2 ring-primary"
+                selectedImage === index && "ring-2 ring-primary",
               )}
             >
               <Image

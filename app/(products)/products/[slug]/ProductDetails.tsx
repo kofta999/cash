@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ProductGallery } from "../../ProductGallery";
+import { ProductGallery } from "@/components/product-gallery";
 import type { products as ProductModel } from "@prisma/client";
 
 type Product = ProductModel & {
