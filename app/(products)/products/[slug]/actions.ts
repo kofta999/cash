@@ -11,6 +11,11 @@ export async function getProductInfo(slug: string) {
           id: true,
           full_name: true,
         }
+      },
+      _count: {
+        select: {
+          likes: true
+        }
       }
     }
   })
