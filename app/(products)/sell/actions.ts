@@ -41,7 +41,7 @@ async function copyProductImages(
   prodId: string,
   userId: string,
 ) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const baseUrl = imgUrl.split("product-images/")[0];
   imgUrl = imgUrl.split("product-images/")[1];
   const newUrl = imgUrl.replace("temp", prodId);
@@ -68,7 +68,7 @@ async function copyProductImages(
 }
 
 async function deleteTempImages(userId: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: list, error: e } = await supabase.storage
     .from("product-images")
     .list(`${userId}/temp`);

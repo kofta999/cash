@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { formatProductCards } from '@/lib/utils';
 
 export async function getAllProducts() {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   const userId = user?.id

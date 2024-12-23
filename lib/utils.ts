@@ -39,7 +39,7 @@ export function formatProductCards<T extends { imageUrls: string[], likes: any[]
 }
 
 export async function getAuth() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },

@@ -5,7 +5,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
 import { redirect } from "next/navigation"
 
 export async function toggleLikeProduct(productId: string): Promise<boolean> {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {

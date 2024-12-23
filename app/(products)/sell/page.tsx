@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import SellForm from "./_components/sell-form";
 
 export default async function SellPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },

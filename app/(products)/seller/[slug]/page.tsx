@@ -2,7 +2,8 @@ import { getSellerInfo } from "./actions";
 import ProductList from "@/components/product-list";
 import SellerProfile from "./_components/seller-profile";
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   // TODO: Use something other than the UID for slugs
   console.log(params.slug);
   const { sellerProducts, sellerProfile } = await getSellerInfo(params.slug);

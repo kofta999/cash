@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import LogoutButton from "./logout-button";
 
 const Navbar = async () => {
-  let supabase = createClient();
+  let supabase = await createClient();
   const {
     data: { session },
   } = await supabase.auth.getSession();
