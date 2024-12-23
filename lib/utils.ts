@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { createClient } from "./supabase/server";
 
 /**
  * Redirects to a specified path with an encoded message as a query parameter.
@@ -35,4 +36,18 @@ export function cn(...inputs: ClassValue[]) {
 
 export function formatProductCards<T extends { imageUrls: string[], likes: any[] | undefined }>(products: T[]) {
   return products.map(({ imageUrls, likes, ...rest }) => ({ thumbnailUrl: imageUrls.at(0), liked: !!likes?.length, ...rest }))
+}
+
+export async function getAuth() {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return redirect("/sign-in");
+  }
+
+  return user
 }

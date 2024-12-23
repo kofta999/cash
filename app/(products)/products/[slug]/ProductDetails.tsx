@@ -9,10 +9,13 @@ type Product = ProductModel & {
     id: string;
     full_name: string | null;
   };
+  _count: {
+    likes: number;
+  };
 };
 
-export function ProductDetails({ product }: { product: Product }) {
-  const {
+export function ProductDetails({
+  product: {
     title,
     description,
     createdAt,
@@ -22,8 +25,11 @@ export function ProductDetails({ product }: { product: Product }) {
     governorate,
     contactNumber,
     users,
-  } = product;
-
+    _count: { likes },
+  },
+}: {
+  product: Product;
+}) {
   const formattedDate = new Date(createdAt).toLocaleDateString();
   const formattedPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -34,7 +40,7 @@ export function ProductDetails({ product }: { product: Product }) {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="grid gap-8 lg:grid-cols-2">
         <ProductGallery images={imageUrls} title={title} />
-        
+
         <div className="flex flex-col gap-6">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
@@ -51,6 +57,11 @@ export function ProductDetails({ product }: { product: Product }) {
                 <dt className="font-medium">Category</dt>
                 <dd className="text-muted-foreground">{type}</dd>
               </div>
+              {/* TODO: Update style here maybe? and add LikeButton component */}
+              <div className="flex justify-between">
+                <dt className="font-medium">Likes</dt>
+                <dd className="text-muted-foreground">{likes}</dd>
+              </div>
               <div className="flex justify-between">
                 <dt className="font-medium">Location</dt>
                 <dd className="text-muted-foreground">{governorate}</dd>
@@ -58,7 +69,7 @@ export function ProductDetails({ product }: { product: Product }) {
               <div className="flex justify-between">
                 <dt className="font-medium">Seller</dt>
                 <dd>
-                  <Link 
+                  <Link
                     href={`/seller/${users.id}`}
                     className="text-primary hover:underline"
                   >
