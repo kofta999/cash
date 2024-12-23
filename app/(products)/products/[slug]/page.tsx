@@ -1,9 +1,26 @@
-import { getProductInfo } from "./actions";
-import { ProductDetails } from "./ProductDetails";
+import prisma from "@/lib/db";
+import { ProductDetails } from "@/components/product-details";
 
-export default async function Page(props: { params: Promise<{ slug: string }> }) {
+export default async function Page(props: {
+  params: Promise<{ slug: string }>;
+}) {
   const params = await props.params;
-  const product = await getProductInfo(params.slug);
+  const product = await prisma.products.findUnique({
+    where: { id: params.slug },
+    include: {
+      users: {
+        select: {
+          id: true,
+          full_name: true,
+        },
+      },
+      _count: {
+        select: {
+          likes: true,
+        },
+      },
+    },
+  });
 
   if (!product) {
     return (

@@ -1,16 +1,10 @@
 "use server"
 import prisma from "@/lib/db"
-import { createClient } from "@/lib/supabase/server"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library"
-import { redirect } from "next/navigation"
+import { getAuth } from "../utils"
 
 export async function toggleLikeProduct(productId: string): Promise<boolean> {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect("/sign-in")
-  }
+  const user = await getAuth()
 
   try {
     await prisma.likes.create({ data: { productId, userId: user.id } })
