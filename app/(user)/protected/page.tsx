@@ -2,7 +2,7 @@ import { getAuth } from "@/lib/utils";
 import { InfoIcon } from "lucide-react";
 
 export default async function ProtectedPage() {
-  const user = getAuth();
+  const user = await getAuth();
 
   return (
     <div className="flex-1 w-full flex flex-col gap-12">

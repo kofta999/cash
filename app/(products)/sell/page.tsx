@@ -1,5 +1,3 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 import SellForm from "./_components/sell-form";
 import { getAuth } from "@/lib/utils";
 
