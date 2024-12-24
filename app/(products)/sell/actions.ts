@@ -3,15 +3,16 @@
 import prisma from "@/lib/db";
 import { randomUUID } from "crypto";
 import { z } from "zod";
-import { SellFormSchema, sellFormSchema } from "./consts";
+import { AdFormData, adFormSchema } from "./consts";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 export async function createProduct(
-  productData: SellFormSchema & { userId: string },
+  productData: AdFormData & { userId: string },
 ) {
+  console.log(productData);
   let prodId = randomUUID();
-  const result = sellFormSchema
+  const result = adFormSchema
     .extend({ userId: z.string() })
     .safeParse(productData);
 
@@ -32,6 +33,8 @@ export async function createProduct(
   });
 
   deleteTempImages(data.userId);
+
+  console.log("Created product");
 
   redirect(`/products/${prodId}`);
 }
