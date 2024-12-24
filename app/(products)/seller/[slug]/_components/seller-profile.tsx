@@ -15,7 +15,6 @@ export default function SellerProfile({
   phone_number,
   links,
   avatar,
-  contactNumber,
 }: SellerProfileProps) {
   return (
     <div className="flex flex-col items-center p-6 bg-card rounded-xl ">
@@ -29,7 +28,9 @@ export default function SellerProfile({
         />
       </div>
       <div className="text-center">
-        <h2 className="text-4xl font-semibold text-card-foreground mb-2">{full_name}</h2>
+        <h2 className="text-4xl font-semibold text-card-foreground mb-2">
+          {full_name}
+        </h2>
         {bio && <p className="text-muted-foreground mb-4">{bio}</p>}
         {links && <SellerLinks links={links} />}
       </div>

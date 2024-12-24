@@ -1,11 +1,41 @@
 import ProductList from "@/components/product-list";
 import React from "react";
-import { getAllProducts } from "./actions";
 import Image from "next/image";
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown } from "lucide-react";
+import { formatProductCards } from "@/lib/utils";
+import prisma from "@/lib/db";
+import { createClient } from "@/lib/supabase/server";
 
-const MyApp = async () => {
-  const products = await getAllProducts();
+export default async function Page() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const userId = user?.id;
+
+  const products = formatProductCards(
+    await prisma.products.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+        title: true,
+        imageUrls: true,
+        price: true,
+        ...(userId
+          ? {
+              likes: {
+                where: {
+                  userId,
+                },
+              },
+            }
+          : {}),
+      },
+    }),
+  );
 
   return (
     <main className="min-h-screen w-full overflow-x-hidden">
@@ -42,12 +72,15 @@ const MyApp = async () => {
       </div>
 
       {/* Products Section */}
-      <section id="products" className="py-12 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-gray-900 mb-8">Featured Products</h2>
+      <section
+        id="products"
+        className="py-12 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto"
+      >
+        <h2 className="text-3xl font-bold text-gray-900 mb-8">
+          Featured Products
+        </h2>
         <ProductList products={products} />
       </section>
     </main>
   );
-};
-
-export default MyApp;
+}

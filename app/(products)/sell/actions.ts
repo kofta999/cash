@@ -3,15 +3,16 @@
 import prisma from "@/lib/db";
 import { randomUUID } from "crypto";
 import { z } from "zod";
-import { SellFormSchema, sellFormSchema } from "./consts";
+import { AdFormData, adFormSchema } from "./consts";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 export async function createProduct(
-  productData: SellFormSchema & { userId: string },
+  productData: AdFormData & { userId: string },
 ) {
+  console.log(productData);
   let prodId = randomUUID();
-  const result = sellFormSchema
+  const result = adFormSchema
     .extend({ userId: z.string() })
     .safeParse(productData);
 
@@ -33,6 +34,8 @@ export async function createProduct(
 
   deleteTempImages(data.userId);
 
+  console.log("Created product");
+
   redirect(`/products/${prodId}`);
 }
 
@@ -41,7 +44,7 @@ async function copyProductImages(
   prodId: string,
   userId: string,
 ) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const baseUrl = imgUrl.split("product-images/")[0];
   imgUrl = imgUrl.split("product-images/")[1];
   const newUrl = imgUrl.replace("temp", prodId);
@@ -68,7 +71,7 @@ async function copyProductImages(
 }
 
 async function deleteTempImages(userId: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: list, error: e } = await supabase.storage
     .from("product-images")
     .list(`${userId}/temp`);

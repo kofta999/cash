@@ -14,7 +14,7 @@ export function encodedRedirect(
   type: "error" | "success",
   path: string,
   message: string,
-) {
+): never {
   return redirect(`${path}?${type}=${encodeURIComponent(message)}`);
 }
 export const getURL = () => {
@@ -39,7 +39,7 @@ export function formatProductCards<T extends { imageUrls: string[], likes: any[]
 }
 
 export async function getAuth() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },

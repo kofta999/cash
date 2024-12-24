@@ -3,7 +3,7 @@ import { encodedRedirect } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/server";
 
 export const resetPasswordAction = async (formData: FormData) => {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const password = formData.get("password") as string;
   const confirmPassword = formData.get("confirmPassword") as string;

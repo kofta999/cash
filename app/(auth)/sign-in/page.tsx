@@ -4,7 +4,8 @@ import GoogleSignIn from "@/components/google-button";
 import { SubmitButton } from "@/components/submit-button";
 import Link from "next/link";
 
-export default function Login({ searchParams }: { searchParams: Message }) {
+export default async function Login(props: { searchParams: Promise<Message> }) {
+  const searchParams = await props.searchParams;
   return (
     <div>
       <div>
