@@ -10,7 +10,6 @@ import { redirect } from "next/navigation";
 export async function createProduct(
   productData: AdFormData & { userId: string },
 ) {
-  console.log(productData);
   let prodId = randomUUID();
   const result = adFormSchema
     .extend({ userId: z.string() })
