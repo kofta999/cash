@@ -1,12 +1,17 @@
 import ProductCard from "@/components/product-card";
 import prisma from "@/lib/db";
 import { getAuth } from "@/lib/utils";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export default async function Page() {
-  const { id } = await getAuth();
+  const maybeUser = await getAuth();
+  if (!maybeUser) {
+    redirect("/sign-in");
+  }
 
-  const maybeUser = await prisma.profiles.findUnique({
+  const { id } = maybeUser;
+
+  const user = await prisma.profiles.findUnique({
     where: { id },
     include: {
       likes: {
@@ -17,7 +22,7 @@ export default async function Page() {
     },
   });
 
-  if (!maybeUser) {
+  if (!user) {
     notFound();
   }
 
@@ -25,7 +30,7 @@ export default async function Page() {
     <div>
       <h2 className="text-4xl text-center font-bold">Liked Products</h2>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 container">
-        {maybeUser.likes.map(({ products: prod }) => (
+        {user.likes.map(({ products: prod }) => (
           <ProductCard
             title={prod.title}
             id={prod.id}

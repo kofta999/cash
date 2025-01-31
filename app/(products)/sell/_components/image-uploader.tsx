@@ -78,6 +78,7 @@ export default function ImageUploader({
         const { data, error } = await supabase.storage
           .from("product-images")
           .upload(filename, file);
+        console.log("here")
 
         if (error) {
           throw error;

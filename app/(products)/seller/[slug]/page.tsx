@@ -9,7 +9,12 @@ export default async function Page(props: {
 }) {
   // TODO: Use something other than the UID for slugs
   const { slug } = await props.params;
-  const { id: userId } = await getAuth();
+  const maybeUser = await getAuth();
+  let userId = null;
+
+  if (maybeUser) {
+    userId = maybeUser.id;
+  }
 
   const [sellerProducts, sellerProfile] = await Promise.all([
     prisma.products.findMany({

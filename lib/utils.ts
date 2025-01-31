@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { createClient } from "./supabase/server";
+import { User } from "@supabase/supabase-js";
 
 /**
  * Redirects to a specified path with an encoded message as a query parameter.
@@ -29,25 +30,26 @@ export const getURL = () => {
   return url;
 };
 
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatProductCards<T extends { imageUrls: string[], likes: any[] | undefined }>(products: T[]) {
-  return products.map(({ imageUrls, likes, ...rest }) => ({ thumbnailUrl: imageUrls.at(0), liked: !!likes?.length, ...rest }))
+export function formatProductCards<
+  T extends { imageUrls: string[]; likes: any[] | undefined },
+>(products: T[]) {
+  return products.map(({ imageUrls, likes, ...rest }) => ({
+    thumbnailUrl: imageUrls.at(0),
+    liked: !!likes?.length,
+    ...rest,
+  }));
 }
 
-export async function getAuth() {
+export async function getAuth(): Promise<User | null> {
   const supabase = await createClient();
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    return redirect("/sign-in");
-  }
-
-  return user
+  return user;
 }

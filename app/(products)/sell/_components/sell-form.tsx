@@ -17,7 +17,6 @@ const SellForm = ({ userId }: SellFormProps) => {
   const schema = adFormSchema.refine(
     (data) => {
       // Check if either field has a non-null, non-empty value
-      console.log("here");
       return Boolean(data.contactNumber) || Boolean(data.instagramLink);
     },
     {

@@ -7,7 +7,6 @@ const Searchbar = () => {
   const handleSearch: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     //searchlogic
-    console.log("searchterm:", searchTerm);
   };
 
   return (
