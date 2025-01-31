@@ -16,9 +16,9 @@ import { createClient } from "@/lib/supabase/client";
 
 type ProfileFormData = {
   id: string;
-  full_name: string | null;
+  fullName: string | null;
   bio: string | null;
-  phone_number: string | null;
+  phoneNumber: string | null;
   avatar: string | null;
   links: string[];
 };
@@ -125,22 +125,22 @@ export default function ProfileEditForm({ initialData }: ProfileEditFormProps) {
           <div className="card-body">
             <h2 className="card-title">Personal Information</h2>
             <div className="form-control">
-              <label className="label" htmlFor="full_name">
+              <label className="label" htmlFor="fullName">
                 <span className="label-text">Full Name</span>
               </label>
               <input
                 type="text"
-                id="full_name"
-                {...register("full_name", {
+                id="fullName"
+                {...register("fullName", {
                   required: "Full name is required",
                 })}
-                className={`input input-bordered ${errors.full_name ? "input-error" : ""}`}
+                className={`input input-bordered ${errors.fullName ? "input-error" : ""}`}
                 placeholder="Enter your full name"
                 disabled={!isEditing}
               />
-              {errors.full_name && (
+              {errors.fullName && (
                 <span className="text-error text-sm mt-1">
-                  {errors.full_name.message}
+                  {errors.fullName.message}
                 </span>
               )}
             </div>
@@ -210,20 +210,20 @@ export default function ProfileEditForm({ initialData }: ProfileEditFormProps) {
           <div className="card-body">
             <h2 className="card-title">Contact Information</h2>
             <div className="form-control">
-              <label className="label" htmlFor="phone_number">
+              <label className="label" htmlFor="phoneNumber">
                 <span className="label-text">Phone Number</span>
               </label>
               <input
                 type="tel"
-                id="phone_number"
-                {...register("phone_number")}
-                className={`input input-bordered ${errors.phone_number ? "input-error" : ""}`}
+                id="phoneNumber"
+                {...register("phoneNumber")}
+                className={`input input-bordered ${errors.phoneNumber ? "input-error" : ""}`}
                 placeholder="Enter your phone number"
                 disabled={!isEditing}
               />
-              {errors.phone_number && (
+              {errors.phoneNumber && (
                 <span className="text-error text-sm mt-1">
-                  {errors.phone_number.message}
+                  {errors.phoneNumber.message}
                 </span>
               )}
             </div>

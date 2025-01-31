@@ -8,10 +8,10 @@ export default async function Page(props: {
   const product = await prisma.products.findUnique({
     where: { id: params.slug },
     include: {
-      users: {
+      profiles: {
         select: {
           id: true,
-          full_name: true,
+          fullName: true,
         },
       },
       _count: {

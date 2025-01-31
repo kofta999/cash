@@ -11,42 +11,45 @@ datasource db {
 }
 
 model likes {
-  userId    String   @db.Uuid
-  productId String
-  products  products @relation(fields: [productId], references: [id], onDelete: Cascade)
-  profiles  profiles @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @db.Uuid @map("userid")
+  productId String   @db.Uuid @map("productid")
+  products  products @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  profiles  profiles @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([userId, productId])
+  @@index([productId], map: "idx_likes_productid")
+  @@index([userId], map: "idx_likes_userid")
   @@schema("public")
 }
 
 model products {
-  id            String   @id(map: "Product_pkey")
+  id            String   @id @db.Uuid
   title         String
   description   String
-  sizes         String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime
-  userId        String   @db.Uuid
-  imageUrls     String[]
+  sizes         String?  @map("sizes")
+  createdAt     DateTime @default(now()) @db.Timestamptz(6) @map("createdat")
+  updatedAt     DateTime @db.Timestamptz(6) @map("updatedat")
+  userId        String   @db.Uuid @map("userid")
+  imageUrls     String[] @map("imageurls")
   price         Float
   type          String
   governorate   String
-  contactNumber String?  @default("")
-  instagramLink String?  @default("")
+  contactNumber String?  @default("") @map("contactnumber")
+  instagramLink String?  @default("") @map("instagramlink")
   likes         likes[]
-  profiles      profiles @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "products_userId_fkey1")
+  profiles      profiles @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "products_userid_fkey1")
 
+  @@index([userId], map: "idx_products_userid")
   @@schema("public")
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model profiles {
   id           String     @id @db.Uuid
-  full_name    String?
-  profile_url  String?
+  fullName     String?    @map("full_name")
+  profileUrl   String?    @map("profile_url")
   bio          String?
-  phone_number String?
+  phoneNumber  String?    @map("phone_number")
   avatar       String?
   links        String[]
   likes        likes[]
@@ -58,71 +61,63 @@ model profiles {
 /// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model audit_log_entries {
+// model AuditLogEntries {
 // @@schema("auth")
 // }
 
 /// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model flow_state {
+// model FlowState {
 // @@schema("auth")
 // }
 
 /// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model identities {
+// model Identities {
 // @@schema("auth")
 // }
 
 /// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model instances {
+// model Instances {
 // @@schema("auth")
 // }
 
 /// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model mfa_amr_claims {
+// model MfaAmrClaims {
 // @@schema("auth")
 // }
 
 /// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model mfa_challenges {
+// model MfaChallenges {
 // @@schema("auth")
 // }
 
 /// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model mfa_factors {
+// model MfaFactors {
 // @@schema("auth")
 // }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 /// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model one_time_tokens {
+// model OneTimeTokens {
 // @@schema("auth")
 // }
 
 /// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model refresh_tokens {
-// @@schema("auth")
-// }
-
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
-/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model saml_providers {
+// model RefreshTokens {
 // @@schema("auth")
 // }
 
@@ -130,21 +125,7 @@ model profiles {
 /// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model saml_relay_states {
-// @@schema("auth")
-// }
-
-/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model schema_migrations {
-// @@schema("auth")
-// }
-
-/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-// model sessions {
+// model SamlProviders {
 // @@schema("auth")
 // }
 
@@ -153,7 +134,21 @@ model profiles {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 /// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
-// model sso_domains {
+// model SamlRelayStates {
+// @@schema("auth")
+// }
+
+/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+// model SchemaMigrations {
+// @@schema("auth")
+// }
+
+/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+// model Sessions {
 // @@schema("auth")
 // }
 
@@ -162,7 +157,7 @@ model profiles {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 /// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
-// model sso_providers {
+// model SsoDomains {
 // @@schema("auth")
 // }
 
@@ -171,11 +166,20 @@ model profiles {
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 /// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
-// model users {
+// model SsoProviders {
 // @@schema("auth")
 // }
 
-enum aal_level {
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
+// model Users {
+// @@schema("auth")
+// }
+
+enum AalLevel {
   aal1
   aal2
   aal3
@@ -183,21 +187,21 @@ enum aal_level {
   @@schema("auth")
 }
 
-enum code_challenge_method {
+enum CodeChallengeMethod {
   s256
   plain
 
   @@schema("auth")
 }
 
-enum factor_status {
+enum FactorStatus {
   unverified
   verified
 
   @@schema("auth")
 }
 
-enum factor_type {
+enum FactorType {
   totp
   webauthn
   phone
@@ -205,7 +209,7 @@ enum factor_type {
   @@schema("auth")
 }
 
-enum one_time_token_type {
+enum OneTimeTokenType {
   confirmation_token
   reauthentication_token
   recovery_token

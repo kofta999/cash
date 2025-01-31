@@ -5,9 +5,9 @@ import { ProductGallery } from "@/components/product-gallery";
 import type { products as ProductModel } from "@prisma/client";
 
 type Product = ProductModel & {
-  users: {
+  profiles: {
     id: string;
-    full_name: string | null;
+    fullName: string | null;
   };
   _count: {
     likes: number;
@@ -24,7 +24,7 @@ export function ProductDetails({
     type,
     governorate,
     contactNumber,
-    users,
+    profiles,
     _count: { likes },
   },
 }: {
@@ -70,10 +70,10 @@ export function ProductDetails({
                 <dt className="font-medium">Seller</dt>
                 <dd>
                   <Link
-                    href={`/seller/${users.id}`}
+                    href={`/seller/${profiles.id}`}
                     className="text-primary hover:underline"
                   >
-                    {users.full_name}
+                    {profiles.fullName}
                   </Link>
                 </dd>
               </div>
